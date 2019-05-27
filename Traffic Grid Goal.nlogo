@@ -61,13 +61,9 @@ to setup
   ;; Make an agentset of all patches where there can be a house or road
   ;; those patches with the background color shade of brown and next to a road
 
-  let goal-candidates patches with [
-    pcolor = 38 and any? neighbors with [ pcolor = white ]
-  ]
-
   create-cars initial-number-cars
   [
-    setup-agent-position
+    setup-agent
     set shape "car"
     set color blue
     set polution 3
@@ -75,7 +71,7 @@ to setup
 
   create-trucks initial-number-trucks
   [
-    setup-agent-position
+    setup-agent
     set shape "truck"
     set color red
     set polution 6
@@ -83,7 +79,7 @@ to setup
 
   create-motorcycles initial-number-motorcycles
   [
-    setup-agent-position
+    setup-agent
     set shape "truck" ; change this other day
     set color black
     set polution 1
@@ -91,13 +87,13 @@ to setup
 
   create-bikes initial-number-bikes
   [
-    setup-agent-position
+    setup-agent
     set shape "truck" ; change this other day
     set color green
     set polution 0
   ]
 
-  ;ask one-of intersections [ become-current ]
+  ask one-of intersections [ become-current ]
 
   ;set-default-shape turtles "car"
 
@@ -127,7 +123,7 @@ to setup
   ;; give the turtles an initial speed
   ;ask turtles [ set-car-speed ]
 
-  ;reset-ticks
+  reset-ticks
 end
 
 to setup-agent-position
@@ -146,6 +142,22 @@ to setup-agent-position
     [ set heading 180 ]
     [ set heading 90 ]
 
+end
+
+to setup-agent-location ; set house, work and goal
+  let goal-candidates patches with [
+    pcolor = 38 and any? neighbors with [ pcolor = white ]
+  ]
+
+  set house one-of goal-candidates ; start point
+    ;; choose at random a location for work, make sure work is not located at same location as house
+  set work one-of goal-candidates with [ self != [ house ] of myself ] ;final point
+  set goal work ;goal arrive work
+end
+
+to setup-agent
+  setup-agent-position
+  setup-agent-location
 end
 
 
@@ -250,7 +262,7 @@ to go
     set-car-speed
     fd speed
     record-data     ;; record data for plotting
-    set-car-color   ;; set color to indicate speed
+    ;set-car-color   ;; set color to indicate speed
   ]
   label-subject ;; if we're watching a car, have it display its goal
   next-phase ;; update the phase and the global clock
@@ -582,7 +594,7 @@ num-cars
 num-cars
 1
 400
-200.0
+206.0
 1
 1
 NIL
@@ -784,7 +796,7 @@ initial-number-cars
 initial-number-cars
 0
 100
-10.0
+0.0
 1
 1
 NIL
@@ -806,10 +818,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-845
-185
-1087
-218
+700
+120
+942
+153
 initial-number-motorcycles
 initial-number-motorcycles
 0
@@ -821,10 +833,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-795
-305
-992
-338
+725
+170
+922
+203
 initial-number-bikes
 initial-number-bikes
 0
@@ -834,6 +846,25 @@ initial-number-bikes
 1
 NIL
 HORIZONTAL
+
+PLOT
+780
+380
+980
+530
+Polution
+Time
+Polution
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count turtles"
+"pen-1" 1.0 0 -7500403 true "" ""
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
