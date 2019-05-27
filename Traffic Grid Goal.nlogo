@@ -13,6 +13,11 @@ globals
   roads         ;; agentset containing the patches that are roads
 ]
 
+breed[cars car]
+breed[motorcycles motorcycle]
+breed[trucks truck]
+breed[bikes bike]
+
 turtles-own
 [
   speed     ;; the speed of the turtle
@@ -21,6 +26,8 @@ turtles-own
   work      ;; the patch where they work
   house     ;; the patch where they live
   goal      ;; where am I currently headed
+  polution
+  ;status
 ]
 
 patches-own
@@ -53,12 +60,46 @@ to setup
 
   ;; Make an agentset of all patches where there can be a house or road
   ;; those patches with the background color shade of brown and next to a road
+
   let goal-candidates patches with [
     pcolor = 38 and any? neighbors with [ pcolor = white ]
   ]
-  ask one-of intersections [ become-current ]
 
-  set-default-shape turtles "car"
+  create-cars initial-number-cars
+  [
+    setup-agent-position
+    set shape "car"
+    set color blue
+    set polution 3
+  ]
+
+  create-trucks initial-number-trucks
+  [
+    setup-agent-position
+    set shape "truck"
+    set color red
+    set polution 6
+  ]
+
+  create-motorcycles initial-number-motorcycles
+  [
+    setup-agent-position
+    set shape "truck" ; change this other day
+    set color black
+    set polution 1
+  ]
+
+  create-bikes initial-number-bikes
+  [
+    setup-agent-position
+    set shape "truck" ; change this other day
+    set color green
+    set polution 0
+  ]
+
+  ;ask one-of intersections [ become-current ]
+
+  ;set-default-shape turtles "car"
 
   if (num-cars > count roads) [
     user-message (word
@@ -72,22 +113,41 @@ to setup
   ]
 
   ;; Now create the cars and have each created car call the functions setup-cars and set-car-color
-  create-turtles num-cars [
-    setup-cars
-    set-car-color ;; slower turtles are blue, faster ones are colored cyan
-    record-data
+  ;create-turtles num-cars [
+  ;  setup-cars
+  ;  set-car-color ;; slower turtles are blue, faster ones are colored cyan
+  ;  record-data
     ;; choose at random a location for the house
-    set house one-of goal-candidates
+  ;  set house one-of goal-candidates
     ;; choose at random a location for work, make sure work is not located at same location as house
-    set work one-of goal-candidates with [ self != [ house ] of myself ]
-    set goal work
-  ]
+  ;  set work one-of goal-candidates with [ self != [ house ] of myself ]
+  ;  set goal work
+  ;]
 
   ;; give the turtles an initial speed
-  ask turtles [ set-car-speed ]
+  ;ask turtles [ set-car-speed ]
 
-  reset-ticks
+  ;reset-ticks
 end
+
+to setup-agent-position
+  put-on-empty-road
+  ifelse intersection? [
+    ifelse random 2 = 0
+      [ set up-car? true ]
+      [ set up-car? false ]
+  ]
+  [ ; if the turtle is on a vertical road (rather than a horizontal one)
+    ifelse (floor ((pxcor + max-pxcor - floor(grid-x-inc - 1)) mod grid-x-inc) = 0)
+      [ set up-car? true ]
+      [ set up-car? false ]
+  ]
+  ifelse up-car?
+    [ set heading 180 ]
+    [ set heading 90 ]
+
+end
+
 
 ;; Initialize the global variables to appropriate values
 to setup-globals
@@ -145,7 +205,7 @@ to setup-intersections
 end
 
 ;; Initialize the turtle variables to appropriate values and place the turtle on an empty road patch.
-to setup-cars  ;; turtle procedure
+to setup-cars  ;new setup-agent ;; turtle procedure
   set speed 0
   set wait-time 0
   put-on-empty-road
@@ -714,6 +774,66 @@ NIL
 NIL
 NIL
 0
+
+SLIDER
+725
+25
+912
+58
+initial-number-cars
+initial-number-cars
+0
+100
+10.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+720
+75
+922
+108
+initial-number-trucks
+initial-number-trucks
+0
+100
+7.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+845
+185
+1087
+218
+initial-number-motorcycles
+initial-number-motorcycles
+0
+100
+15.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+795
+305
+992
+338
+initial-number-bikes
+initial-number-bikes
+0
+100
+2.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
