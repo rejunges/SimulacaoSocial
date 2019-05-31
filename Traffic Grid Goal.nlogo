@@ -7,6 +7,8 @@ globals
   phase                    ;; keeps track of the phase
   num-cars-stopped         ;; the number of cars that are stopped during a single pass thru the go procedure
   current-intersection     ;; the currently selected intersection
+  totalpolution            ; conts the polution in the enviroment
+  ;slowpolution
 
   ;; patch agentsets
   intersections ;; agentset containing the patches that are intersections
@@ -57,6 +59,9 @@ to setup
   clear-all
   setup-globals
   setup-patches  ;; ask the patches to draw themselves and set up a few variables
+
+  set totalpolution 0
+  ;slowpolution true
 
   ;; Make an agentset of all patches where there can be a house or road
   ;; those patches with the background color shade of brown and next to a road
@@ -160,6 +165,11 @@ to setup-agent
   setup-agent-location
 end
 
+to update-polution
+  set totalpolution totalpolution + polution
+
+end
+
 
 ;; Initialize the global variables to appropriate values
 to setup-globals
@@ -254,7 +264,7 @@ to go
   ;; have the intersections change their color
   set-signals
   set num-cars-stopped 0
-
+  ;if slowpolution? [set totalpolution totalpolution - 10]
   ;; set the cars’ speed, move them forward their speed, record data for plotting,
   ;; and set the color of the cars to an appropriate color based on their speed
   ask turtles [
@@ -262,6 +272,7 @@ to go
     set-car-speed
     fd speed
     record-data     ;; record data for plotting
+    update-polution
     ;set-car-color   ;; set color to indicate speed
   ]
   label-subject ;; if we're watching a car, have it display its goal
@@ -594,7 +605,7 @@ num-cars
 num-cars
 1
 400
-206.0
+208.0
 1
 1
 NIL
@@ -661,7 +672,7 @@ speed-limit
 speed-limit
 0.1
 1
-1.0
+0.9
 0.1
 1
 NIL
@@ -863,8 +874,19 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count turtles"
+"default" 1.0 0 -16777216 true "" "plot totalpolution"
 "pen-1" 1.0 0 -7500403 true "" ""
+
+SWITCH
+760
+230
+907
+263
+slowpolution
+slowpolution
+0
+1
+-1000
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
