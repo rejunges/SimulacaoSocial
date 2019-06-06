@@ -29,7 +29,8 @@ turtles-own
   house     ;; the patch where they live
   goal      ;; where am I currently headed
   polution
-  ;status
+  km ; km andados
+  status? ; alive or dead
 ]
 
 patches-own
@@ -61,6 +62,7 @@ to setup
   setup-patches  ;; ask the patches to draw themselves and set up a few variables
 
   set totalpolution 0
+
   ;slowpolution true
 
   ;; Make an agentset of all patches where there can be a house or road
@@ -71,7 +73,7 @@ to setup
     setup-agent
     set shape "car"
     set color blue
-    set polution 3
+    set polution polution-cars
   ]
 
   create-trucks initial-number-trucks
@@ -79,7 +81,7 @@ to setup
     setup-agent
     set shape "truck"
     set color red
-    set polution 6
+    set polution polution-trucks
   ]
 
   create-motorcycles initial-number-motorcycles
@@ -87,7 +89,7 @@ to setup
     setup-agent
     set shape "truck" ; change this other day
     set color black
-    set polution 1
+    set polution polution-motorcycles
   ]
 
   create-bikes initial-number-bikes
@@ -95,7 +97,7 @@ to setup
     setup-agent
     set shape "truck" ; change this other day
     set color green
-    set polution 0
+    set polution polution-bikes
   ]
 
   ask one-of intersections [ become-current ]
@@ -126,7 +128,11 @@ to setup
   ;]
 
   ;; give the turtles an initial speed
-  ;ask turtles [ set-car-speed ]
+  ask turtles [
+    set-car-speed
+    set km 0
+    set status? true
+  ]
 
   reset-ticks
 end
@@ -167,9 +173,14 @@ end
 
 to update-polution
   set totalpolution totalpolution + polution
-
 end
 
+to update-km
+  set km km + speed
+  if (km >= km_final)
+      [ set status? false
+        set color blue  ]
+end
 
 ;; Initialize the global variables to appropriate values
 to setup-globals
@@ -273,6 +284,7 @@ to go
     fd speed
     record-data     ;; record data for plotting
     update-polution
+    update-km
     ;set-car-color   ;; set color to indicate speed
   ]
   label-subject ;; if we're watching a car, have it display its goal
@@ -344,13 +356,18 @@ end
 ;; set the turtles' speed based on whether they are at a red traffic light or the speed of the
 ;; turtle (if any) on the patch in front of them
 to set-car-speed  ;; turtle procedure
-  ifelse pcolor = red [
-    set speed 0
-  ]
-  [
-    ifelse up-car?
+  ifelse status? = true[
+
+    ifelse pcolor = red [
+      set speed 0
+    ]
+    [
+      ifelse up-car?
       [ set-speed 0 -1 ]
       [ set-speed 1 0 ]
+    ]
+  ]
+  [set speed 0
   ]
 end
 
@@ -359,16 +376,24 @@ end
 to set-speed [ delta-x delta-y ]  ;; turtle procedure
   ;; get the turtles on the patch in front of the turtle
   let turtles-ahead turtles-at delta-x delta-y
+  let status-global 0
 
   ;; if there are turtles in front of the turtle, slow down
   ;; otherwise, speed up
-  ifelse any? turtles-ahead [
-    ifelse any? (turtles-ahead with [ up-car? != [ up-car? ] of myself ]) [
-      set speed 0
+  ifelse any? turtles-ahead[
+    ask turtles-ahead [
+      if status? = false[
+        set status-global 1 ; verifica se dentro das tartatugas "a frente" existe alguma que está morta
+      ]
     ]
-    [
-      set speed [speed] of one-of turtles-ahead
-      slow-down
+    if status-global = 0 [ ; se ela está viva, então velocidade 0 ou slow-down, caso contrário, aumenta velocidade
+      ifelse any? (turtles-ahead with [ up-car? != [ up-car? ] of myself ]) [
+        set speed 0
+      ]
+      [
+        set speed [speed] of one-of turtles-ahead
+        slow-down
+      ]
     ]
   ]
   [ speed-up ]
@@ -418,6 +443,8 @@ to next-phase
   set phase phase + 1
   if phase mod ticks-per-cycle = 0 [ set phase 0 ]
 end
+
+
 
 ;; establish goal of driver (house or work) and move to next patch along the way
 to-report next-patch
@@ -672,7 +699,7 @@ speed-limit
 speed-limit
 0.1
 1
-0.9
+0.8
 0.1
 1
 NIL
@@ -884,9 +911,84 @@ SWITCH
 263
 slowpolution
 slowpolution
-0
+1
 1
 -1000
+
+SLIDER
+1015
+170
+1187
+203
+polution-bikes
+polution-bikes
+0
+100
+0.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+995
+120
+1197
+153
+polution-motorcycles
+polution-motorcycles
+0
+100
+1.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+1005
+75
+1177
+108
+polution-trucks
+polution-trucks
+0
+100
+6.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+1010
+25
+1182
+58
+polution-cars
+polution-cars
+0
+100
+3.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+1065
+235
+1237
+268
+km_final
+km_final
+0
+1000
+50.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
