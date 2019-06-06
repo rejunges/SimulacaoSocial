@@ -13,6 +13,11 @@ globals
   ;; patch agentsets
   intersections ;; agentset containing the patches that are intersections
   roads         ;; agentset containing the patches that are roads
+  total-polution-cars
+  total-polution-bikes
+  total-polution-trucks
+  total-polution-motorcycles
+
 ]
 
 breed[cars car]
@@ -62,6 +67,10 @@ to setup
   setup-patches  ;; ask the patches to draw themselves and set up a few variables
 
   set totalpolution 0
+  set total-polution-cars 0
+  set total-polution-bikes 0
+  set total-polution-trucks 0
+  set total-polution-motorcycles 0
 
   ;slowpolution true
 
@@ -172,7 +181,9 @@ to setup-agent
 end
 
 to update-polution
-  set totalpolution totalpolution + polution
+  if status? = true [
+    set totalpolution totalpolution + polution
+  ]
 end
 
 to update-km
@@ -289,6 +300,35 @@ to go
   ]
   label-subject ;; if we're watching a car, have it display its goal
   next-phase ;; update the phase and the global clock
+
+  set totalpolution totalpolution - env-polution
+  if totalpolution < 0
+  [ set totalpolution 0 ]
+
+  ask cars[
+    if status? = true [
+      set total-polution-cars total-polution-cars + polution
+    ]
+  ]
+
+  ask trucks[
+    if status? = true [
+      set total-polution-trucks total-polution-trucks + polution
+    ]
+  ]
+
+  ask bikes[
+    if status? = true [
+      set total-polution-bikes total-polution-bikes + polution
+    ]
+   ]
+
+  ask motorcycles[
+    if status? = true [
+      set total-polution-motorcycles total-polution-motorcycles + polution
+    ]
+  ]
+
   tick
 
 end
@@ -886,10 +926,10 @@ NIL
 HORIZONTAL
 
 PLOT
-780
-380
-980
-530
+720
+375
+920
+525
 Polution
 Time
 Polution
@@ -903,17 +943,6 @@ false
 PENS
 "default" 1.0 0 -16777216 true "" "plot totalpolution"
 "pen-1" 1.0 0 -7500403 true "" ""
-
-SWITCH
-760
-230
-907
-263
-slowpolution
-slowpolution
-1
-1
--1000
 
 SLIDER
 1015
@@ -989,6 +1018,42 @@ km_final
 1
 NIL
 HORIZONTAL
+
+SLIDER
+720
+270
+892
+303
+env-polution
+env-polution
+0
+100
+25.0
+1
+1
+NIL
+HORIZONTAL
+
+PLOT
+950
+375
+1150
+525
+Individual polution
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot total-polution-cars"
+"pen-1" 1.0 0 -7500403 true "" "plot total-polution-trucks"
+"pen-2" 1.0 0 -2674135 true "" "plot total-polution-bikes"
+"pen-3" 1.0 0 -955883 true "" "plot total-polution-motorcycles"
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
