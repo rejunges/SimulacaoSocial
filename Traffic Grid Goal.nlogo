@@ -889,7 +889,7 @@ initial-number-trucks
 initial-number-trucks
 0
 100
-7.0
+15.0
 1
 1
 NIL
@@ -1050,7 +1050,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot total-polution-cars"
+"pen-4" 1.0 0 -16777216 true "" "plot total-polution-cars"
 "pen-1" 1.0 0 -7500403 true "" "plot total-polution-trucks"
 "pen-2" 1.0 0 -2674135 true "" "plot total-polution-bikes"
 "pen-3" 1.0 0 -955883 true "" "plot total-polution-motorcycles"
