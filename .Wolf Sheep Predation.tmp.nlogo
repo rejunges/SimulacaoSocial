@@ -1,8 +1,8 @@
 globals [
+
   max-sheep ; don't let the sheep population grow too large
   season ; estações do ano (4 valores: 1.verao 2.outono 3.inverno 4.primavera
   countTicks ;
-
 ]
 
 
@@ -61,6 +61,7 @@ to setup
    set shape "person"
    set color blue
    set size 2.5
+   set energy (2 * human-gain-from-food)
    setxy random-xcor random-ycor
   ]
 
@@ -89,6 +90,11 @@ to go
     move
     set energy energy - 1  ; wolves lose energy as they move
     eat-sheep ; wolves eat a sheep on their patch
+    if random-float 100 < human-dead-rate
+    [
+      eat-wolf-humans
+    ]
+
     death ; wolves die if they run out of energy
     reproduce-wolves ; wolves reproduce at a random rate governed by a slider
   ]
@@ -97,7 +103,35 @@ to go
 
   update-season
 
-  ask
+  ask humans [
+    move
+    set energy energy - 1
+
+    ifelse season = 2 or season = 3
+    [
+      if random-float 100 < human-eat-sheep-normal-rate * 2
+      [
+        eat-humans-sheep
+      ]
+
+    ]
+    [
+      if random-float 100 < human-eat-sheep-normal-rate
+      [
+        eat-humans-sheep
+      ]
+
+    ]
+
+    if random-float 100 < human-eat-wolves-normal-rate
+    [
+      eat-humans-wolves
+    ]
+
+    reproduce-humans
+    death
+
+  ]
 
   tick
 
@@ -149,6 +183,13 @@ to reproduce-wolves  ; wolf procedure
   ]
 end
 
+to reproduce-humans  ; taxa de reprodução do human
+  if random-float 100 < human-reproduce [  ; throw "dice" to see if you will reproduce
+    set energy (energy / 2)               ; divide energy between parent and offspring
+    hatch 1 [ rt random-float 360 fd 1 ]  ; hatch an offspring and move it forward 1 step
+  ]
+end
+
 to eat-sheep  ; wolf procedure
   let prey one-of sheep-here                    ; grab a random sheep
   if prey != nobody  [                          ; did we get one? if so,
@@ -157,12 +198,48 @@ to eat-sheep  ; wolf procedure
   ]
 end
 
+to eat-wolf-humans  ; Wolf come humanos
+  let prey one-of humans-here                    ; grab a random sheep
+  if prey != nobody  [                          ; did we get one? if so,
+    ask prey [ die ]                            ; kill it, and...
+    set energy energy + wolf-gain-from-food     ; get energy from eating
+  ]
+end
+
+to eat-humans-sheep ; Humanos comem as ovelhas
+  let prey one-of sheep-here                    ; grab a random sheep
+  if prey != nobody  [                          ; did we get one? if so,
+    ask prey [ die ]                            ; kill it, and...
+    set energy energy + human-gain-from-food     ; get energy from eating
+  ]
+end
+
+to eat-humans-wolves  ; Humanos comem lobos
+  let prey one-of wolves-here                    ; grab a random sheep
+  if prey != nobody  [                          ; did we get one? if so,
+    ask prey [ die ]                            ; kill it, and...
+    set energy energy + human-gain-from-food     ; get energy from eating
+  ]
+end
+
+
 to death  ; turtle procedure (i.e. both wolf and sheep procedure)
   ; when energy dips below zero, die
   if energy < 0 [ die ]
 end
 
 to grow-grass  ; patch procedure
+
+  ifelse season = 1 or season = 4
+  [
+    let grass-regrowth-time-au
+    set grass-regrowth-time grass-regrowth-time * 2
+  ]
+  [
+
+  ]
+
+
   ; countdown on brown patches: if you reach 0, grow some grass
   if pcolor = brown [
     ifelse countdown <= 0
@@ -462,7 +539,7 @@ initial-number-humans
 initial-number-humans
 0
 100
-12.0
+100.0
 1
 1
 NIL
@@ -500,9 +577,9 @@ HORIZONTAL
 
 SLIDER
 910
-290
+260
 1082
-323
+293
 ticks-for-season
 ticks-for-season
 0
@@ -523,6 +600,51 @@ season
 17
 1
 11
+
+SLIDER
+1140
+50
+1312
+83
+human-dead-rate
+human-dead-rate
+0
+100
+0.0
+1
+1
+%
+HORIZONTAL
+
+SLIDER
+1150
+180
+1377
+213
+human-eat-wolves-normal-rate
+human-eat-wolves-normal-rate
+0
+50
+8.0
+1
+1
+%
+HORIZONTAL
+
+SLIDER
+1150
+255
+1382
+288
+human-eat-sheep-normal-rate
+human-eat-sheep-normal-rate
+0
+50
+10.0
+1
+1
+%
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
