@@ -1,7 +1,8 @@
 globals [
 
   max-sheep ; don't let the sheep population grow too large
-  season ; estações do ano (4 valores: 1.verao 2.outono 3.inverno 4.primavera
+  season ; estações do ano (4 valores: 1.verao 2.outono 3.inverno 4.primavera)
+  seasonString ;
   countTicks ;
 ]
 
@@ -19,6 +20,7 @@ to setup
   clear-all
 
   set season 1
+  update-season-string
 
   ifelse netlogo-web? [ set max-sheep 10000 ] [ set max-sheep 30000 ]
 
@@ -120,7 +122,6 @@ to go
       [
         eat-humans-sheep
       ]
-
     ]
 
     if random-float 100 < human-eat-wolves-normal-rate
@@ -128,9 +129,8 @@ to go
       eat-humans-wolves
     ]
 
-    reproduce-humans
     death
-
+    reproduce-humans
   ]
 
   tick
@@ -151,6 +151,29 @@ set countTicks countTicks + 1
     [
       set season 1
     ]
+
+    update-season-string
+  ]
+end
+
+
+to update-season-string
+  ; 1.verao 2.outono 3.inverno 4.primavera
+  if season = 1
+  [
+    set seasonString "Verão"
+  ]
+  if season = 2
+  [
+    set seasonString "Outono"
+  ]
+  if season = 3
+  [
+    set seasonString "Inverno"
+  ]
+  if season = 4
+  [
+    set seasonString "Primavera"
   ]
 
 end
@@ -187,6 +210,7 @@ to reproduce-humans  ; taxa de reprodução do human
   if random-float 100 < human-reproduce [  ; throw "dice" to see if you will reproduce
     set energy (energy / 2)               ; divide energy between parent and offspring
     hatch 1 [ rt random-float 360 fd 1 ]  ; hatch an offspring and move it forward 1 step
+
   ]
 end
 
@@ -230,21 +254,18 @@ end
 
 to grow-grass  ; patch procedure
 
-  ifelse season = 1 or season = 4
-  [
-    let grass-regrowth-time-au
-    set grass-regrowth-time grass-regrowth-time * 2
-  ]
-  [
+  let grass-regrowth-time-aux grass-regrowth-time
 
+  if season = 1 or season = 4
+  [
+    set grass-regrowth-time-aux grass-regrowth-time-aux * 2
   ]
-
 
   ; countdown on brown patches: if you reach 0, grow some grass
   if pcolor = brown [
     ifelse countdown <= 0
       [ set pcolor green
-        set countdown grass-regrowth-time ]
+        set countdown grass-regrowth-time-aux ]
       [ set countdown countdown - 1 ]
   ]
 end
@@ -532,9 +553,9 @@ model-version
 
 SLIDER
 910
-45
+70
 1082
-78
+103
 initial-number-humans
 initial-number-humans
 0
@@ -554,7 +575,7 @@ human-gain-from-food
 human-gain-from-food
 0
 100
-10.0
+26.0
 1
 1
 NIL
@@ -562,14 +583,14 @@ HORIZONTAL
 
 SLIDER
 910
-205
+165
 1082
-238
+198
 human-reproduce
 human-reproduce
 1
 20
-5.0
+20.0
 1
 1
 %
@@ -577,9 +598,9 @@ HORIZONTAL
 
 SLIDER
 910
-260
+215
 1082
-293
+248
 ticks-for-season
 ticks-for-season
 0
@@ -592,39 +613,39 @@ HORIZONTAL
 
 MONITOR
 910
-365
-967
-410
-season
-season
+270
+1007
+315
+Estação do Ano
+seasonString
 17
 1
 11
 
 SLIDER
-1140
-50
-1312
-83
+1095
+70
+1267
+103
 human-dead-rate
 human-dead-rate
 0
 100
-0.0
+100.0
 1
 1
 %
 HORIZONTAL
 
 SLIDER
-1150
-180
-1377
-213
+1095
+115
+1322
+148
 human-eat-wolves-normal-rate
 human-eat-wolves-normal-rate
 0
-50
+100
 8.0
 1
 1
@@ -632,19 +653,50 @@ human-eat-wolves-normal-rate
 HORIZONTAL
 
 SLIDER
-1150
-255
-1382
-288
+1095
+165
+1327
+198
 human-eat-sheep-normal-rate
 human-eat-sheep-normal-rate
 0
 50
-10.0
+50.0
 1
 1
 %
 HORIZONTAL
+
+TEXTBOX
+910
+15
+1060
+33
+Human settings
+11
+0.0
+1
+
+MONITOR
+910
+330
+967
+375
+Humans
+count humans
+17
+1
+11
+
+TEXTBOX
+1095
+50
+1285
+76
+Taxa dos lobos matarem os humanos
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
