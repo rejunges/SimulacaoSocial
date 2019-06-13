@@ -874,7 +874,7 @@ initial-number-cars
 initial-number-cars
 0
 100
-0.0
+5.0
 1
 1
 NIL
