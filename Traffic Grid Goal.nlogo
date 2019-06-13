@@ -81,7 +81,7 @@ to setup
   [
     setup-agent
     set shape "car"
-    set color blue
+    set color gray
     set polution polution-cars
   ]
 
@@ -89,7 +89,7 @@ to setup
   [
     setup-agent
     set shape "truck"
-    set color red
+    set color violet
     set polution polution-trucks
   ]
 
@@ -190,7 +190,7 @@ to update-km
   set km km + speed
   if (km >= km_final)
       [ set status? false
-        set color blue  ]
+        set color sky  ]
 end
 
 ;; Initialize the global variables to appropriate values
@@ -426,7 +426,7 @@ to set-speed [ delta-x delta-y ]  ;; turtle procedure
         set status-global 1 ; verifica se dentro das tartatugas "a frente" existe alguma que está morta
       ]
     ]
-    if status-global = 0 [ ; se ela está viva, então velocidade 0 ou slow-down, caso contrário, aumenta velocidade
+    ifelse status-global = 0 [ ; se ela está viva, então velocidade 0 ou slow-down, caso contrário, aumenta velocidade
       ifelse any? (turtles-ahead with [ up-car? != [ up-car? ] of myself ]) [
         set speed 0
       ]
@@ -435,6 +435,7 @@ to set-speed [ delta-x delta-y ]  ;; turtle procedure
         slow-down
       ]
     ]
+    [ speed-up ]
   ]
   [ speed-up ]
 end
@@ -889,7 +890,7 @@ initial-number-trucks
 initial-number-trucks
 0
 100
-15.0
+100.0
 1
 1
 NIL
@@ -1028,7 +1029,7 @@ env-polution
 env-polution
 0
 100
-25.0
+15.0
 1
 1
 NIL
