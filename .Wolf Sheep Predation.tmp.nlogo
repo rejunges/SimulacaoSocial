@@ -1,6 +1,7 @@
 globals [
 
   max-sheep ; don't let the sheep population grow too large
+
   season ; estações do ano (4 valores: 1.verao 2.outono 3.inverno 4.primavera)
   seasonString ;
   countTicks ;
@@ -210,12 +211,17 @@ to reproduce-humans  ; taxa de reprodução do human
   if random-float 100 < human-reproduce [  ; throw "dice" to see if you will reproduce
     set energy (energy / 2)               ; divide energy between parent and offspring
     hatch 1 [ rt random-float 360 fd 1 ]  ; hatch an offspring and move it forward 1 step
-
   ]
 end
 
 to eat-sheep  ; wolf procedure
-  let prey one-of sheep-here                    ; grab a random sheep
+  ;let prey one-of sheep-here                    ; grab a random sheep
+  ;let vizinhos neighbors with [any? sheep-here]
+  ; show vizinhos
+ ; show prey
+  ;show pxcor
+  ;show pycor
+  ;patch-here (patches at-points vision-points) with [not any? turtles-here]
   if prey != nobody  [                          ; did we get one? if so,
     ask prey [ die ]                            ; kill it, and...
     set energy energy + wolf-gain-from-food     ; get energy from eating
@@ -242,7 +248,12 @@ to eat-humans-wolves  ; Humanos comem lobos
   let prey one-of wolves-here                    ; grab a random sheep
   if prey != nobody  [                          ; did we get one? if so,
     ask prey [ die ]                            ; kill it, and...
-    set energy energy + human-gain-from-food     ; get energy from eating
+    ifelse energy < human-gain-from-food[
+      set energy energy + human-gain-from-food
+    ]
+    [
+      set energy energy - 0.2 * human-gain-from-food     ; get energy from eating
+    ]
   ]
 end
 
@@ -326,7 +337,7 @@ initial-number-sheep
 initial-number-sheep
 0
 250
-100.0
+50.0
 1
 1
 NIL
@@ -356,7 +367,7 @@ sheep-reproduce
 sheep-reproduce
 1.0
 20.0
-4.0
+2.0
 1.0
 1
 %
@@ -552,44 +563,44 @@ model-version
 0
 
 SLIDER
-910
-70
-1082
-103
+890
+40
+1062
+73
 initial-number-humans
 initial-number-humans
 0
 100
-100.0
+50.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-910
-115
-1082
-148
+890
+85
+1062
+118
 human-gain-from-food
 human-gain-from-food
 0
 100
-26.0
+80.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-910
-165
-1082
-198
+890
+135
+1062
+168
 human-reproduce
 human-reproduce
 1
-20
+50
 20.0
 1
 1
@@ -597,10 +608,10 @@ human-reproduce
 HORIZONTAL
 
 SLIDER
-910
-215
-1082
-248
+890
+185
+1062
+218
 ticks-for-season
 ticks-for-season
 0
@@ -612,10 +623,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-910
-270
-1007
-315
+1300
+20
+1397
+65
 Estação do Ano
 seasonString
 17
@@ -623,40 +634,40 @@ seasonString
 11
 
 SLIDER
-1095
-70
-1267
-103
+1075
+40
+1247
+73
 human-dead-rate
 human-dead-rate
 0
 100
-100.0
+5.0
 1
 1
 %
 HORIZONTAL
 
 SLIDER
-1095
-115
-1322
-148
+1075
+85
+1302
+118
 human-eat-wolves-normal-rate
 human-eat-wolves-normal-rate
 0
 100
-8.0
+5.0
 1
 1
 %
 HORIZONTAL
 
 SLIDER
-1095
-165
-1327
-198
+1075
+135
+1307
+168
 human-eat-sheep-normal-rate
 human-eat-sheep-normal-rate
 0
@@ -678,10 +689,10 @@ Human settings
 1
 
 MONITOR
-910
-330
-967
-375
+1420
+20
+1477
+65
 Humans
 count humans
 17
@@ -689,14 +700,94 @@ count humans
 11
 
 TEXTBOX
-1095
-50
-1285
-76
+1075
+20
+1265
+46
 Taxa dos lobos matarem os humanos
 11
 0.0
 1
+
+PLOT
+890
+235
+1160
+410
+Numero de agentes no verão
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Humanos" 1.0 0 -16777216 true "" "plot count humans with [season = 1]"
+"Ovelhas" 1.0 0 -7500403 true "" "plot count sheep with [season = 1]"
+"Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 1]"
+
+PLOT
+890
+415
+1160
+595
+Numero de agentes no outono
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Humanos" 1.0 0 -16777216 true "" "plot count humans with [season = 2]"
+"Ovelhas" 1.0 0 -7500403 true "" "plot count sheep with [season = 2]"
+"Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 2]"
+
+PLOT
+1195
+235
+1470
+415
+Numero de agentes no inverno
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Humanos" 1.0 0 -16777216 true "" "plot count humans with [season = 3]"
+"Ovelhas" 1.0 0 -7500403 true "" "plot count sheep with [season = 3]"
+"Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 3]"
+
+PLOT
+1195
+420
+1470
+595
+Numero de agentes no primavera
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Humans" 1.0 0 -16777216 true "" "plot count humans with [season = 4]"
+"Ovelhas" 1.0 0 -7500403 true "" "plot count sheep with [season = 4]"
+"Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 4]"
 
 @#$#@#$#@
 ## WHAT IS IT?
