@@ -77,6 +77,8 @@ to setup
   ;; Make an agentset of all patches where there can be a house or road
   ;; those patches with the background color shade of brown and next to a road
 
+
+
   create-cars initial-number-cars
   [
     setup-agent
@@ -135,13 +137,13 @@ to setup
   ;  set work one-of goal-candidates with [ self != [ house ] of myself ]
   ;  set goal work
   ;]
-
   ;; give the turtles an initial speed
   ask turtles [
     set-car-speed
     set km 0
     set status? true
   ]
+
 
   reset-ticks
 end
@@ -176,7 +178,9 @@ to setup-agent-location ; set house, work and goal
 end
 
 to setup-agent
+
   setup-agent-position
+
   setup-agent-location
 end
 
@@ -248,26 +252,6 @@ to setup-intersections
   ]
 end
 
-;; Initialize the turtle variables to appropriate values and place the turtle on an empty road patch.
-to setup-cars  ;new setup-agent ;; turtle procedure
-  set speed 0
-  set wait-time 0
-  put-on-empty-road
-  ifelse intersection? [
-    ifelse random 2 = 0
-      [ set up-car? true ]
-      [ set up-car? false ]
-  ]
-  [ ; if the turtle is on a vertical road (rather than a horizontal one)
-    ifelse (floor ((pxcor + max-pxcor - floor(grid-x-inc - 1)) mod grid-x-inc) = 0)
-      [ set up-car? true ]
-      [ set up-car? false ]
-  ]
-  ifelse up-car?
-    [ set heading 180 ]
-    [ set heading 90 ]
-end
-
 ;; Find a road patch without any turtles on it and place the turtle there.
 to put-on-empty-road  ;; turtle procedure
   move-to one-of roads with [ not any? turtles-on self ]
@@ -290,9 +274,11 @@ to go
   ;; set the cars’ speed, move them forward their speed, record data for plotting,
   ;; and set the color of the cars to an appropriate color based on their speed
   ask turtles [
+    if status? = true[
     face next-patch ;; car heads towards its goal
     set-car-speed
-    fd speed
+      fd speed
+    ]
     record-data     ;; record data for plotting
     update-polution
     update-km
@@ -331,6 +317,12 @@ to go
 
   tick
 
+  ifelse any? turtles with [status? = true][
+
+  ]
+  [
+    stop
+  ]
 end
 
 to choose-current
@@ -875,7 +867,7 @@ initial-number-cars
 initial-number-cars
 0
 100
-0.0
+100.0
 1
 1
 NIL
@@ -890,7 +882,7 @@ initial-number-trucks
 initial-number-trucks
 0
 100
-100.0
+76.0
 1
 1
 NIL
@@ -920,7 +912,7 @@ initial-number-bikes
 initial-number-bikes
 0
 100
-2.0
+5.0
 1
 1
 NIL
@@ -1014,7 +1006,7 @@ km_final
 km_final
 0
 1000
-50.0
+204.0
 1
 1
 NIL
@@ -1048,13 +1040,78 @@ NIL
 0.0
 10.0
 true
-false
+true
 "" ""
 PENS
-"pen-4" 1.0 0 -16777216 true "" "plot total-polution-cars"
-"pen-1" 1.0 0 -7500403 true "" "plot total-polution-trucks"
-"pen-2" 1.0 0 -2674135 true "" "plot total-polution-bikes"
-"pen-3" 1.0 0 -955883 true "" "plot total-polution-motorcycles"
+"Carros" 1.0 0 -16777216 true "" "plot total-polution-cars"
+"Caminhões" 1.0 0 -7500403 true "" "plot total-polution-trucks"
+"Bikes" 1.0 0 -2674135 true "" "plot total-polution-bikes"
+"Motos" 1.0 0 -955883 true "" "plot total-polution-motorcycles"
+
+MONITOR
+1270
+20
+1380
+65
+Carros ativos
+count cars with [status? = true]
+17
+1
+11
+
+MONITOR
+1270
+75
+1377
+120
+Caminhões ativos
+count trucks with [status? = true]
+17
+1
+11
+
+MONITOR
+1270
+130
+1375
+175
+Bikes ativas
+count bikes with [status? = true]
+17
+1
+11
+
+MONITOR
+1270
+185
+1380
+230
+Motos ativas
+count motorcycles with [status? = true]
+17
+1
+11
+
+PLOT
+1215
+340
+1450
+550
+Veiculos ativos
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Carros" 1.0 0 -16777216 true "" "plot count cars with [status? = true]"
+"Caminhões" 1.0 0 -7500403 true "" "plot count trucks with [status? = true]"
+"Bikes" 1.0 0 -2674135 true "" "plot count bikes with [status? = true]"
+"Motos" 1.0 0 -955883 true "" "plot count motorcycles with [status? = true]"
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
