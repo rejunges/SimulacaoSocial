@@ -859,40 +859,40 @@ NIL
 0
 
 SLIDER
-725
-40
-912
-73
+685
+25
+890
+58
 initial-number-cars
 initial-number-cars
 0
 100
-100.0
+50.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-725
-85
-927
-118
+685
+80
+890
+113
 initial-number-trucks
 initial-number-trucks
 0
 100
-76.0
+10.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-725
-130
-967
-163
+685
+140
+890
+173
 initial-number-motorcycles
 initial-number-motorcycles
 0
@@ -904,10 +904,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-725
-175
-922
-208
+685
+195
+890
+228
 initial-number-bikes
 initial-number-bikes
 0
@@ -919,11 +919,11 @@ NIL
 HORIZONTAL
 
 PLOT
-695
-340
-945
-550
-Polution
+685
+310
+935
+520
+Poluição total do ambiente
 Time
 Polution
 0.0
@@ -938,10 +938,10 @@ PENS
 "pen-1" 1.0 0 -7500403 true "" ""
 
 SLIDER
-1040
-180
-1212
-213
+930
+195
+1105
+228
 polution-bikes
 polution-bikes
 0
@@ -953,10 +953,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1040
-135
-1242
-168
+930
+140
+1105
+173
 polution-motorcycles
 polution-motorcycles
 0
@@ -968,10 +968,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1040
-90
-1212
-123
+930
+80
+1105
+113
 polution-trucks
 polution-trucks
 0
@@ -983,10 +983,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1040
-45
-1212
-78
+930
+25
+1105
+58
 polution-cars
 polution-cars
 0
@@ -998,41 +998,41 @@ NIL
 HORIZONTAL
 
 SLIDER
-925
-245
-1097
-278
+1140
+80
+1375
+113
 km_final
 km_final
 0
 1000
-204.0
+200.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-725
-245
-897
-278
+1140
+25
+1375
+58
 env-polution
 env-polution
 0
 100
-15.0
+50.0
 1
 1
 NIL
 HORIZONTAL
 
 PLOT
-955
-340
-1205
-550
-Individual polution
+945
+310
+1195
+520
+Poluição individual
 NIL
 NIL
 0.0
@@ -1049,10 +1049,10 @@ PENS
 "Motos" 1.0 0 -955883 true "" "plot total-polution-motorcycles"
 
 MONITOR
-1270
-20
-1380
-65
+685
+245
+765
+290
 Carros ativos
 count cars with [status? = true]
 17
@@ -1060,10 +1060,10 @@ count cars with [status? = true]
 11
 
 MONITOR
-1270
-75
-1377
-120
+780
+245
+875
+290
 Caminhões ativos
 count trucks with [status? = true]
 17
@@ -1071,10 +1071,10 @@ count trucks with [status? = true]
 11
 
 MONITOR
-1270
-130
-1375
-175
+1005
+245
+1085
+290
 Bikes ativas
 count bikes with [status? = true]
 17
@@ -1082,10 +1082,10 @@ count bikes with [status? = true]
 11
 
 MONITOR
-1270
-185
-1380
-230
+895
+245
+990
+290
 Motos ativas
 count motorcycles with [status? = true]
 17
@@ -1093,10 +1093,10 @@ count motorcycles with [status? = true]
 11
 
 PLOT
-1215
-340
-1450
-550
+1205
+310
+1440
+520
 Veiculos ativos
 NIL
 NIL
@@ -1112,6 +1112,106 @@ PENS
 "Caminhões" 1.0 0 -7500403 true "" "plot count trucks with [status? = true]"
 "Bikes" 1.0 0 -2674135 true "" "plot count bikes with [status? = true]"
 "Motos" 1.0 0 -955883 true "" "plot count motorcycles with [status? = true]"
+
+TEXTBOX
+685
+10
+835
+28
+Número inicial de carros
+11
+0.0
+1
+
+TEXTBOX
+685
+65
+835
+83
+Número inicial de caminhões
+11
+0.0
+1
+
+TEXTBOX
+685
+125
+835
+143
+Número inicial de motos
+11
+0.0
+1
+
+TEXTBOX
+685
+180
+835
+198
+Número inical de bikes
+11
+0.0
+1
+
+TEXTBOX
+1140
+10
+1320
+36
+Dissipação da poluição do ambiente
+11
+0.0
+1
+
+TEXTBOX
+930
+10
+1080
+28
+Polição dos carros
+11
+0.0
+1
+
+TEXTBOX
+930
+65
+1080
+85
+Poluição dos caminhões
+11
+0.0
+1
+
+TEXTBOX
+930
+125
+1080
+143
+Poluição das motos
+11
+0.0
+1
+
+TEXTBOX
+930
+180
+1080
+198
+Poluição das bikes
+11
+0.0
+1
+
+TEXTBOX
+1140
+65
+1385
+91
+Total de km a serem percorridos por cada agente
+11
+0.0
+1
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
