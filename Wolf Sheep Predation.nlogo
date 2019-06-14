@@ -576,7 +576,7 @@ CHOOSER
 model-version
 model-version
 "sheep-wolves" "sheep-wolves-grass"
-1
+0
 
 SLIDER
 885
@@ -770,7 +770,7 @@ PLOT
 210
 1465
 390
-População no Inverno
+Popul. no Inverno
 NIL
 NIL
 0.0
@@ -790,7 +790,7 @@ PLOT
 395
 1465
 570
-População na primavera
+Popul. na primavera
 NIL
 NIL
 0.0
