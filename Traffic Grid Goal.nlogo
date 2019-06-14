@@ -1148,7 +1148,7 @@ TEXTBOX
 180
 835
 198
-Número inical de bikes
+Número inicial de bikes
 11
 0.0
 1
@@ -1168,7 +1168,7 @@ TEXTBOX
 10
 1080
 28
-Polição dos carros
+Poluição dos carros
 11
 0.0
 1

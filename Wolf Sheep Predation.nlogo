@@ -809,7 +809,7 @@ TEXTBOX
 1070
 65
 1295
-91
+105
 Taxa de humanos caçarem/comerem lobos\n(depende da energia do humano)
 11
 0.0
@@ -841,6 +841,16 @@ TEXTBOX
 1035
 28
 Número inicial de humanos
+11
+0.0
+1
+
+TEXTBOX
+1295
+10
+1455
+36
+Total de ticks por estação do ano
 11
 0.0
 1
