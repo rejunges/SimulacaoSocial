@@ -215,44 +215,60 @@ to reproduce-humans  ; taxa de reprodução do human
 end
 
 to eat-sheep  ; wolf procedure
-  let prey one-of sheep-here                    ; grab a random sheep
-  ;let vizinhos neighbors with [any? sheep-here]
-  ; show vizinhos
- ; show prey
-  ;show pxcor
-  ;show pycor
+  ;let pre one-of sheep-here                    ; grab a random sheep
+
+  let prey one-of neighbors with [any? sheep-here]
+
   ;patch-here (patches at-points vision-points) with [not any? turtles-here]
   if prey != nobody  [                          ; did we get one? if so,
+
+    set prey  sheep-on prey
+
     ask prey [ die ]                            ; kill it, and...
     set energy energy + wolf-gain-from-food     ; get energy from eating
   ]
 end
 
 to eat-wolf-humans  ; Wolf come humanos
-  let prey one-of humans-here                    ; grab a random sheep
+  ;let prey one-of humans-here                    ; grab a random sheep
+
+  let prey one-of neighbors with [any? humans-here]
+
   if prey != nobody  [                          ; did we get one? if so,
+    set prey  humans-on prey
     ask prey [ die ]                            ; kill it, and...
     set energy energy + wolf-gain-from-food     ; get energy from eating
   ]
 end
 
 to eat-humans-sheep ; Humanos comem as ovelhas
-  let prey one-of sheep-here                    ; grab a random sheep
+  ;let prey one-of sheep-here                    ; grab a random sheep
+
+  let prey one-of neighbors with [any? sheep-here]
+
   if prey != nobody  [                          ; did we get one? if so,
+    set prey  sheep-on prey
     ask prey [ die ]                            ; kill it, and...
     set energy energy + human-gain-from-food     ; get energy from eating
   ]
 end
 
 to eat-humans-wolves  ; Humanos comem lobos
-  let prey one-of wolves-here                    ; grab a random sheep
-  if prey != nobody  [                          ; did we get one? if so,
-    ask prey [ die ]                            ; kill it, and...
-    ifelse energy < human-gain-from-food[
-      set energy energy + human-gain-from-food
+  ;let prey one-of wolves-here                    ; grab a random sheep
+
+  let prey one-of neighbors with [any? wolves-here]
+
+  if prey != nobody  [
+    set prey  wolves-on prey
+    ask prey [ die ]
+
+    ; Verifica se energia do agente humano está menor que o human-gain-from-food
+    ifelse energy < human-gain-from-food
+    [
+      set energy energy + human-gain-from-food  ; ganha energia ao comer o lobo
     ]
     [
-      set energy energy - 0.2 * human-gain-from-food     ; get energy from eating
+      set energy energy - 0.2 * human-gain-from-food     ; perde energia ao caçar o lobo
     ]
   ]
 end
@@ -337,7 +353,7 @@ initial-number-sheep
 initial-number-sheep
 0
 250
-50.0
+250.0
 1
 1
 NIL
@@ -352,7 +368,7 @@ sheep-gain-from-food
 sheep-gain-from-food
 0.0
 50.0
-4.0
+20.0
 1.0
 1
 NIL
@@ -367,7 +383,7 @@ sheep-reproduce
 sheep-reproduce
 1.0
 20.0
-2.0
+10.0
 1.0
 1
 %
@@ -382,7 +398,7 @@ initial-number-wolves
 initial-number-wolves
 0
 250
-50.0
+10.0
 1
 1
 NIL
@@ -397,7 +413,7 @@ wolf-gain-from-food
 wolf-gain-from-food
 0.0
 100.0
-20.0
+15.0
 1.0
 1
 NIL
@@ -489,10 +505,10 @@ PENS
 "humans" 1.0 0 -7500403 true "" "plot count humans"
 
 MONITOR
-41
-308
-111
-353
+1365
+150
+1415
+195
 sheep
 count sheep
 3
@@ -500,10 +516,10 @@ count sheep
 11
 
 MONITOR
-115
-308
-185
-353
+1415
+150
+1465
+195
 wolves
 count wolves
 3
@@ -511,10 +527,10 @@ count wolves
 11
 
 MONITOR
-191
-308
-256
-353
+10
+305
+75
+350
 grass
 count grass / 4
 0
@@ -563,70 +579,70 @@ model-version
 0
 
 SLIDER
-890
-40
-1062
-73
+885
+30
+1057
+63
 initial-number-humans
 initial-number-humans
 0
 100
-50.0
+20.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-890
-85
-1062
-118
+885
+95
+1057
+128
 human-gain-from-food
 human-gain-from-food
 0
 100
-80.0
+43.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-890
-135
-1062
-168
+885
+160
+1057
+193
 human-reproduce
 human-reproduce
 1
 50
-20.0
+2.0
 1
 1
 %
 HORIZONTAL
 
 SLIDER
-890
-185
-1062
-218
+1295
+30
+1467
+63
 ticks-for-season
 ticks-for-season
 0
 50
-30.0
+10.0
 1
 1
 NIL
 HORIZONTAL
 
 MONITOR
-1300
-20
-1397
-65
+1370
+70
+1467
+115
 Estação do Ano
 seasonString
 17
@@ -634,40 +650,40 @@ seasonString
 11
 
 SLIDER
-1075
-40
-1247
-73
+1070
+30
+1280
+63
 human-dead-rate
 human-dead-rate
 0
 100
-5.0
+2.0
 1
 1
 %
 HORIZONTAL
 
 SLIDER
-1075
-85
-1302
-118
+1070
+95
+1280
+128
 human-eat-wolves-normal-rate
 human-eat-wolves-normal-rate
 0
 100
-5.0
+10.0
 1
 1
 %
 HORIZONTAL
 
 SLIDER
-1075
-135
-1307
-168
+1070
+160
+1285
+193
 human-eat-sheep-normal-rate
 human-eat-sheep-normal-rate
 0
@@ -679,20 +695,20 @@ human-eat-sheep-normal-rate
 HORIZONTAL
 
 TEXTBOX
-910
-15
-1060
-33
-Human settings
+885
+75
+1035
+93
+Ganho de energia ao comer
 11
 0.0
 1
 
 MONITOR
-1420
-20
-1477
-65
+1315
+150
+1365
+195
 Humans
 count humans
 17
@@ -700,20 +716,20 @@ count humans
 11
 
 TEXTBOX
-1075
-20
-1265
-46
+1070
+10
+1260
+36
 Taxa dos lobos matarem os humanos
 11
 0.0
 1
 
 PLOT
-890
-235
-1160
-410
+885
+210
+1175
+385
 Numero de agentes no verão
 NIL
 NIL
@@ -730,10 +746,10 @@ PENS
 "Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 1]"
 
 PLOT
-890
-415
-1160
-595
+885
+390
+1175
+570
 Numero de agentes no outono
 NIL
 NIL
@@ -750,10 +766,10 @@ PENS
 "Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 2]"
 
 PLOT
-1195
-235
-1470
-415
+1190
+210
+1465
+390
 Numero de agentes no inverno
 NIL
 NIL
@@ -770,10 +786,10 @@ PENS
 "Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 3]"
 
 PLOT
-1195
-420
-1470
-595
+1190
+395
+1465
+570
 Numero de agentes no primavera
 NIL
 NIL
@@ -788,6 +804,46 @@ PENS
 "Humans" 1.0 0 -16777216 true "" "plot count humans with [season = 4]"
 "Ovelhas" 1.0 0 -7500403 true "" "plot count sheep with [season = 4]"
 "Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 4]"
+
+TEXTBOX
+1070
+65
+1295
+91
+Taxa de humanos caçarem/comerem lobos\n(depende da energia do humano)
+11
+0.0
+1
+
+TEXTBOX
+1070
+130
+1275
+171
+Taxa de humanos matarem ovelhas\n(varia por estação do ano)
+11
+0.0
+1
+
+TEXTBOX
+885
+140
+1050
+166
+Taxa de reprodução dos humanos
+11
+0.0
+1
+
+TEXTBOX
+885
+10
+1035
+28
+Número inicial de humanos
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
