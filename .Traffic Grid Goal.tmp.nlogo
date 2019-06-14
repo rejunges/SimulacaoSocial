@@ -98,7 +98,7 @@ to setup
   create-motorcycles initial-number-motorcycles
   [
     setup-agent
-    set shape "truck" ; change this other day
+    set shape "" ; change this other day
     set color black
     set polution polution-motorcycles
   ]
@@ -106,7 +106,7 @@ to setup
   create-bikes initial-number-bikes
   [
     setup-agent
-    set shape "truck" ; change this other day
+    set shape "bike" ; change this other day
     set color green
     set polution polution-bikes
   ]
@@ -859,40 +859,40 @@ NIL
 0
 
 SLIDER
-725
-40
-912
-73
+685
+25
+890
+58
 initial-number-cars
 initial-number-cars
 0
 100
-100.0
+50.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-725
-85
-927
-118
+685
+80
+890
+113
 initial-number-trucks
 initial-number-trucks
 0
 100
-76.0
+10.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-725
-130
-967
-163
+685
+140
+890
+173
 initial-number-motorcycles
 initial-number-motorcycles
 0
@@ -904,26 +904,26 @@ NIL
 HORIZONTAL
 
 SLIDER
-725
-175
-922
-208
+685
+195
+890
+228
 initial-number-bikes
 initial-number-bikes
 0
 100
-5.0
+69.0
 1
 1
 NIL
 HORIZONTAL
 
 PLOT
-695
-340
-945
-550
-Polution
+685
+310
+935
+520
+Poluição total do ambiente
 Time
 Polution
 0.0
@@ -938,10 +938,10 @@ PENS
 "pen-1" 1.0 0 -7500403 true "" ""
 
 SLIDER
-1040
-180
-1212
-213
+930
+195
+1105
+228
 polution-bikes
 polution-bikes
 0
@@ -953,10 +953,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1040
-135
-1242
-168
+930
+140
+1105
+173
 polution-motorcycles
 polution-motorcycles
 0
@@ -968,10 +968,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1040
-90
-1212
-123
+930
+80
+1105
+113
 polution-trucks
 polution-trucks
 0
@@ -983,10 +983,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1040
-45
-1212
-78
+930
+25
+1105
+58
 polution-cars
 polution-cars
 0
@@ -998,41 +998,41 @@ NIL
 HORIZONTAL
 
 SLIDER
-925
-245
-1097
-278
+1140
+80
+1375
+113
 km_final
 km_final
 0
 1000
-204.0
+200.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-725
-245
-897
-278
+1140
+25
+1375
+58
 env-polution
 env-polution
 0
 100
-15.0
+50.0
 1
 1
 NIL
 HORIZONTAL
 
 PLOT
-955
-340
-1205
-550
-Individual polution
+945
+310
+1195
+520
+Poluição individual
 NIL
 NIL
 0.0
@@ -1049,10 +1049,10 @@ PENS
 "Motos" 1.0 0 -955883 true "" "plot total-polution-motorcycles"
 
 MONITOR
-1270
-20
-1380
-65
+685
+245
+775
+290
 Carros ativos
 count cars with [status? = true]
 17
@@ -1060,10 +1060,10 @@ count cars with [status? = true]
 11
 
 MONITOR
-1270
-75
-1377
-120
+790
+245
+910
+290
 Caminhões ativos
 count trucks with [status? = true]
 17
@@ -1071,10 +1071,10 @@ count trucks with [status? = true]
 11
 
 MONITOR
-1270
-130
-1375
-175
+1040
+245
+1120
+290
 Bikes ativas
 count bikes with [status? = true]
 17
@@ -1082,10 +1082,10 @@ count bikes with [status? = true]
 11
 
 MONITOR
-1270
-185
-1380
-230
+930
+245
+1025
+290
 Motos ativas
 count motorcycles with [status? = true]
 17
@@ -1093,10 +1093,10 @@ count motorcycles with [status? = true]
 11
 
 PLOT
-1215
-340
-1450
-550
+1205
+310
+1440
+520
 Veiculos ativos
 NIL
 NIL
@@ -1112,6 +1112,106 @@ PENS
 "Caminhões" 1.0 0 -7500403 true "" "plot count trucks with [status? = true]"
 "Bikes" 1.0 0 -2674135 true "" "plot count bikes with [status? = true]"
 "Motos" 1.0 0 -955883 true "" "plot count motorcycles with [status? = true]"
+
+TEXTBOX
+685
+10
+835
+28
+Número inicial de carros
+11
+0.0
+1
+
+TEXTBOX
+685
+65
+900
+83
+Número inicial de caminhões
+11
+0.0
+1
+
+TEXTBOX
+685
+125
+835
+143
+Número inicial de motos
+11
+0.0
+1
+
+TEXTBOX
+685
+180
+835
+198
+Número inicial de bikes
+11
+0.0
+1
+
+TEXTBOX
+1145
+10
+1380
+36
+Dissipação da poluição do ambiente
+11
+0.0
+1
+
+TEXTBOX
+930
+10
+1080
+28
+Poluição dos carros
+11
+0.0
+1
+
+TEXTBOX
+930
+65
+1080
+85
+Poluição dos caminhões
+11
+0.0
+1
+
+TEXTBOX
+930
+125
+1080
+143
+Poluição das motos
+11
+0.0
+1
+
+TEXTBOX
+930
+180
+1080
+198
+Poluição das bikes
+11
+0.0
+1
+
+TEXTBOX
+1120
+65
+1420
+91
+Total de km a serem percorridos por cada agente
+11
+0.0
+1
 
 @#$#@#$#@
 ## ACKNOWLEDGMENT
@@ -1277,6 +1377,20 @@ true
 0
 Polygon -7500403 true true 150 0 0 150 105 150 105 293 195 293 195 150 300 150
 
+bike
+true
+0
+Circle -13791810 false false 18 138 85
+Circle -13791810 false false 183 138 85
+Line -13840069 false 60 180 135 180
+Line -13840069 false 225 180 180 90
+Line -13840069 false 135 180 195 120
+Line -13840069 false 60 180 105 135
+Line -13840069 false 105 135 195 120
+Line -13840069 false 135 180 90 120
+Line -13345367 false 150 90 210 90
+Line -13345367 false 75 120 105 120
+
 box
 false
 0
@@ -1428,6 +1542,17 @@ true
 0
 Line -7500403 true 150 0 150 150
 
+moto
+true
+0
+Circle -7500403 true true 33 138 85
+Circle -7500403 true true 183 138 85
+Rectangle -7500403 true true 105 180 195 195
+Rectangle -7500403 true true 165 105 195 180
+Rectangle -7500403 true true 150 90 225 105
+Rectangle -7500403 true true 105 120 120 180
+Rectangle -7500403 true true 90 105 135 120
+
 pentagon
 false
 0
@@ -1560,6 +1685,27 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
+
+bike
+0.0
+-0.2 0 0.0 1.0
+0.0 1 1.0 0.0
+0.2 0 0.0 1.0
+link direction
+true
+0
+Circle -13345367 false false 30 120 90
+Circle -13345367 false false 195 120 90
+Circle -7500403 false true 75 165 0
+Line -13840069 false 150 165 75 165
+Line -13840069 false 240 165 180 75
+Line -13840069 false 150 165 195 105
+Line -13840069 false 150 165 90 90
+Line -13840069 false 75 165 105 105
+Line -13840069 false 105 105 195 105
+Line -13791810 false 75 90 105 90
+Line -13791810 false 165 75 195 75
+Circle -13345367 false false 129 144 42
 @#$#@#$#@
 1
 @#$#@#$#@

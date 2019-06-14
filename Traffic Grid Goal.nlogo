@@ -98,7 +98,7 @@ to setup
   create-motorcycles initial-number-motorcycles
   [
     setup-agent
-    set shape "truck" ; change this other day
+    set shape "moto"
     set color black
     set polution polution-motorcycles
   ]
@@ -106,7 +106,7 @@ to setup
   create-bikes initial-number-bikes
   [
     setup-agent
-    set shape "truck" ; change this other day
+    set shape "bike"
     set color green
     set polution polution-bikes
   ]
@@ -867,7 +867,7 @@ initial-number-cars
 initial-number-cars
 0
 100
-50.0
+34.0
 1
 1
 NIL
@@ -882,7 +882,7 @@ initial-number-trucks
 initial-number-trucks
 0
 100
-10.0
+47.0
 1
 1
 NIL
@@ -912,7 +912,7 @@ initial-number-bikes
 initial-number-bikes
 0
 100
-5.0
+11.0
 1
 1
 NIL
@@ -1051,7 +1051,7 @@ PENS
 MONITOR
 685
 245
-765
+775
 290
 Carros ativos
 count cars with [status? = true]
@@ -1060,9 +1060,9 @@ count cars with [status? = true]
 11
 
 MONITOR
-780
+790
 245
-875
+910
 290
 Caminhões ativos
 count trucks with [status? = true]
@@ -1071,9 +1071,9 @@ count trucks with [status? = true]
 11
 
 MONITOR
-1005
+1040
 245
-1085
+1120
 290
 Bikes ativas
 count bikes with [status? = true]
@@ -1082,9 +1082,9 @@ count bikes with [status? = true]
 11
 
 MONITOR
-895
+930
 245
-990
+1025
 290
 Motos ativas
 count motorcycles with [status? = true]
@@ -1126,7 +1126,7 @@ Número inicial de carros
 TEXTBOX
 685
 65
-835
+900
 83
 Número inicial de caminhões
 11
@@ -1154,9 +1154,9 @@ Número inicial de bikes
 1
 
 TEXTBOX
-1140
+1145
 10
-1320
+1380
 36
 Dissipação da poluição do ambiente
 11
@@ -1204,9 +1204,9 @@ Poluição das bikes
 1
 
 TEXTBOX
-1140
+1120
 65
-1385
+1420
 91
 Total de km a serem percorridos por cada agente
 11
@@ -1377,6 +1377,20 @@ true
 0
 Polygon -7500403 true true 150 0 0 150 105 150 105 293 195 293 195 150 300 150
 
+bike
+true
+0
+Circle -13791810 false false 18 138 85
+Circle -13791810 false false 183 138 85
+Line -13840069 false 60 180 135 180
+Line -13840069 false 225 180 180 90
+Line -13840069 false 135 180 195 120
+Line -13840069 false 60 180 105 135
+Line -13840069 false 105 135 195 120
+Line -13840069 false 135 180 90 120
+Line -13345367 false 150 90 210 90
+Line -13345367 false 75 120 105 120
+
 box
 false
 0
@@ -1528,6 +1542,17 @@ true
 0
 Line -7500403 true 150 0 150 150
 
+moto
+true
+0
+Circle -7500403 true true 33 138 85
+Circle -7500403 true true 183 138 85
+Rectangle -7500403 true true 105 180 195 195
+Rectangle -7500403 true true 165 105 195 180
+Rectangle -7500403 true true 150 90 225 105
+Rectangle -7500403 true true 105 120 120 180
+Rectangle -7500403 true true 90 105 135 120
+
 pentagon
 false
 0
@@ -1660,6 +1685,27 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
+
+bike
+0.0
+-0.2 0 0.0 1.0
+0.0 1 1.0 0.0
+0.2 0 0.0 1.0
+link direction
+true
+0
+Circle -13345367 false false 30 120 90
+Circle -13345367 false false 195 120 90
+Circle -7500403 false true 75 165 0
+Line -13840069 false 150 165 75 165
+Line -13840069 false 240 165 180 75
+Line -13840069 false 150 165 195 105
+Line -13840069 false 150 165 90 90
+Line -13840069 false 75 165 105 105
+Line -13840069 false 105 105 195 105
+Line -13791810 false 75 90 105 90
+Line -13791810 false 165 75 195 75
+Circle -13345367 false false 129 144 42
 @#$#@#$#@
 1
 @#$#@#$#@
