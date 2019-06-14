@@ -576,7 +576,7 @@ CHOOSER
 model-version
 model-version
 "sheep-wolves" "sheep-wolves-grass"
-0
+1
 
 SLIDER
 885
@@ -639,7 +639,7 @@ NIL
 HORIZONTAL
 
 MONITOR
-1370
+1357
 70
 1467
 115
@@ -673,7 +673,7 @@ human-eat-wolves-normal-rate
 human-eat-wolves-normal-rate
 0
 100
-10.0
+12.0
 1
 1
 %
@@ -697,7 +697,7 @@ HORIZONTAL
 TEXTBOX
 885
 75
-1035
+1185
 93
 Ganho de energia ao comer
 11
@@ -705,7 +705,7 @@ Ganho de energia ao comer
 1
 
 MONITOR
-1315
+1300
 150
 1365
 195
@@ -716,9 +716,9 @@ count humans
 11
 
 TEXTBOX
-1070
+1065
 10
-1260
+1295
 36
 Taxa dos lobos matarem os humanos
 11
@@ -730,7 +730,7 @@ PLOT
 210
 1175
 385
-Numero de agentes no verão
+População no verão
 NIL
 NIL
 0.0
@@ -750,7 +750,7 @@ PLOT
 390
 1175
 570
-Numero de agentes no outono
+População no outono
 NIL
 NIL
 0.0
@@ -770,7 +770,7 @@ PLOT
 210
 1465
 390
-Numero de agentes no inverno
+População no Inverno
 NIL
 NIL
 0.0
@@ -790,7 +790,7 @@ PLOT
 395
 1465
 570
-Numero de agentes no primavera
+População na primavera
 NIL
 NIL
 0.0
@@ -806,9 +806,9 @@ PENS
 "Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 4]"
 
 TEXTBOX
-1070
+1055
 65
-1295
+1320
 105
 Taxa de humanos caçarem/comerem lobos\n(depende da energia do humano)
 11
@@ -816,9 +816,9 @@ Taxa de humanos caçarem/comerem lobos\n(depende da energia do humano)
 1
 
 TEXTBOX
-1070
+1080
 130
-1275
+1305
 171
 Taxa de humanos matarem ovelhas\n(varia por estação do ano)
 11
@@ -826,9 +826,9 @@ Taxa de humanos matarem ovelhas\n(varia por estação do ano)
 1
 
 TEXTBOX
-885
+875
 140
-1050
+1105
 166
 Taxa de reprodução dos humanos
 11
@@ -838,7 +838,7 @@ Taxa de reprodução dos humanos
 TEXTBOX
 885
 10
-1035
+1055
 28
 Número inicial de humanos
 11
@@ -846,9 +846,9 @@ Número inicial de humanos
 1
 
 TEXTBOX
-1295
+1290
 10
-1455
+1490
 36
 Total de ticks por estação do ano
 11
