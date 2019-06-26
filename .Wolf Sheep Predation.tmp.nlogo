@@ -806,9 +806,9 @@ PENS
 "Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 4]"
 
 TEXTBOX
-1055
+1065
 65
-1320
+1330
 105
 Taxa de humanos caçarem/comerem lobos\n(depende da energia do humano)
 11

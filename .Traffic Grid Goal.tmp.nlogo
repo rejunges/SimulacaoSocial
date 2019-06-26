@@ -98,7 +98,7 @@ to setup
   create-motorcycles initial-number-motorcycles
   [
     setup-agent
-    set shape "" ; change this other day
+    set shape "moto"
     set color black
     set polution polution-motorcycles
   ]
@@ -106,7 +106,7 @@ to setup
   create-bikes initial-number-bikes
   [
     setup-agent
-    set shape "bike" ; change this other day
+    set shape "bike"
     set color green
     set polution polution-bikes
   ]
@@ -867,7 +867,7 @@ initial-number-cars
 initial-number-cars
 0
 100
-50.0
+34.0
 1
 1
 NIL
@@ -882,7 +882,7 @@ initial-number-trucks
 initial-number-trucks
 0
 100
-10.0
+47.0
 1
 1
 NIL
@@ -912,7 +912,7 @@ initial-number-bikes
 initial-number-bikes
 0
 100
-69.0
+11.0
 1
 1
 NIL
@@ -1204,9 +1204,9 @@ Poluição das bikes
 1
 
 TEXTBOX
-1120
+1140
 65
-1420
+1440
 91
 Total de km a serem percorridos por cada agente
 11

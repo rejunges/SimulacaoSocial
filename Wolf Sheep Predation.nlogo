@@ -806,9 +806,9 @@ PENS
 "Lobos" 1.0 0 -2674135 true "" "plot count wolves with [season = 4]"
 
 TEXTBOX
-1055
+1070
 65
-1320
+1335
 105
 Taxa de humanos caçarem/comerem lobos\n(depende da energia do humano)
 11
@@ -816,9 +816,9 @@ Taxa de humanos caçarem/comerem lobos\n(depende da energia do humano)
 1
 
 TEXTBOX
-1080
+1075
 130
-1305
+1300
 171
 Taxa de humanos matarem ovelhas\n(varia por estação do ano)
 11
@@ -846,9 +846,9 @@ Número inicial de humanos
 1
 
 TEXTBOX
-1290
+1295
 10
-1490
+1495
 36
 Total de ticks por estação do ano
 11
