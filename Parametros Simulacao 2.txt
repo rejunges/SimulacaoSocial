@@ -1,0 +1,31 @@
+Ordem de extinção:
+
+Exemplo 1
+1- Ovelha
+2- Lobos
+3- Humanos
+
+Exemplo 2
+1- Humanos
+2- Ovelha
+3- Lobos
+
+human-dead-rate = 20
+
+Exemplo 3
+1- Ovelha
+2- Humanos
+3- Lobos
+
+human-dead-rate = 20
+sheep-reproduce = 5
+wolf-reproduce = 10
+wolf-gain-food = 30
+human-gain-from-food = 15
+
+
+
+
+
+
+
